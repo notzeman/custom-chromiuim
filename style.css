@@ -1,0 +1,329 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+
+    background: #0d0f17;
+
+    font-family:
+        Inter,
+        "SF Pro Display",
+        sans-serif;
+
+    overflow: hidden;
+}
+
+#wallpaper-layer {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image: url("wallpaper.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+#wallpaper-layer.show {
+    opacity: 1;
+}
+
+.clock-card {
+    position: absolute;
+
+    top: 72px;
+    left: 40px;
+
+    width: 360px;
+    padding: 28px;
+
+    border-radius: 32px;
+
+    background: rgba(30, 35, 55, 0.25);
+
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+
+    border: 1px solid rgba(255,255,255,0.25);
+
+    box-shadow:
+        0 8px 32px rgba(0,0,0,0.25);
+
+    color: white;
+}
+
+#clock {
+    font-size: 96px;
+    font-weight: 200;
+    line-height: 1;
+    letter-spacing: -4px;
+}
+
+#date {
+    margin-top: 20px;
+
+    font-size: 18px;
+    font-weight: 400;
+
+    opacity: 0.95;
+}
+
+.divider {
+    margin-top: 24px;
+    margin-bottom: 24px;
+
+    height: 1px;
+
+    background: rgba(255,255,255,0.2);
+}
+
+#weather {
+    font-size: 18px;
+    font-weight: 400;
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#weather-icon {
+    flex-shrink: 0;
+}
+
+.weather-sep {
+    opacity: 0.5;
+}
+
+#bookmarks-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 200;
+    padding: 6px 14px;
+    white-space: nowrap;
+}
+
+.bookmark-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 10px;
+    background: rgba(30, 35, 55, 0.35);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: background 0.25s, transform 0.25s, border-color 0.25s;
+    white-space: nowrap;
+}
+
+.bookmark-pill:hover {
+    background: rgba(255,255,255,0.12);
+}
+
+.bookmark-icon {
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.bookmark-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+}
+
+.bookmark-trash {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.15s;
+    line-height: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    color: rgba(255,255,255,0.6);
+    background: rgba(180, 180, 190, 0.7);
+}
+
+.bookmark-pill {
+    position: relative;
+}
+
+.bookmark-pill:hover .bookmark-trash {
+    display: inline-flex;
+    opacity: 1;
+}
+
+.bookmark-folder-wrap {
+    position: relative;
+}
+
+.dropdown-arrow {
+    transition: transform 0.2s;
+}
+
+.bookmark-folder-wrap.active .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.bookmark-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-6px);
+    margin-top: 8px;
+    width: 25vw;
+    padding: 8px;
+    border-radius: 8px;
+    background: rgba(30, 35, 55, 0.45);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.12);
+    z-index: 300;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+}
+
+.bookmark-folder-wrap.active .bookmark-dropdown {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    transition: background 0.15s;
+    position: relative;
+}
+
+.dropdown-item:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.dropdown-item .bookmark-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+.dropdown-item > span:not(.dropdown-trash) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+}
+
+.dropdown-trash {
+    margin-left: auto;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.15s;
+    line-height: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    color: rgba(255,255,255,0.6);
+    background: rgba(180, 180, 190, 0.7);
+    flex-shrink: 0;
+}
+
+.dropdown-item:hover .dropdown-trash {
+    display: inline-flex;
+    opacity: 1;
+}
+
+
+.more-btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0;
+}
+
+.bookmark-folder-wrap.active .more-dropdown {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.more-dropdown {
+    right: 0;
+    left: auto;
+    transform: translateY(-6px);
+}
+
+.dropdown-header {
+    padding: 6px 12px 4px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.6;
+}
+
+#wallpaper-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(30, 35, 55, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    z-index: 100;
+}
+
+#wallpaper-btn:hover {
+    background: rgba(255,255,255,0.15);
+}
+
+#wallpaper-input {
+    display: none;
+}

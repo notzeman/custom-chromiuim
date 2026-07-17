@@ -1,0 +1,11 @@
+{
+  "manifest_version": 2,
+  "name": "Helium Clock",
+  "version": "1.0",
+  "description": "A minimal new tab page with a live clock, weather, bookmarks bar, and custom wallpaper support.",
+  "author": "Zaman",
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "permissions": ["bookmarks"]
+}
